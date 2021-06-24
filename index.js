@@ -1,12 +1,12 @@
-const config = require("./config.json")
 const MatrixClient = require("matrix-bot-sdk").MatrixClient;
 const AutojoinRoomsMixin = require("matrix-bot-sdk").AutojoinRoomsMixin;
 const Discord = require('discord.js');
 const clientd = new Discord.Client(
     {fetchAllMembers: true}
 );
-const clientm = new MatrixClient("https://matrix-client.matrix.org", config["matrixBotKey"]);
+const clientm = new MatrixClient("https://bot-server-here.example.org", "matrix key here");
 AutojoinRoomsMixin.setupOnClient(clientm);
+var currentRoomId = "!roomID@example.org"
 
 function msleep(n) {
     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n);
@@ -14,7 +14,7 @@ function msleep(n) {
 function sleep(n) {
     msleep(n*1000);
 }
-var currentRoomId = config["currentRoomId"]
+
 // To listen for room messages (m.room.message) only:
 clientm.on("room.message", (roomId, event) => {
     if (roomId == currentRoomId) {
@@ -24,7 +24,7 @@ clientm.on("room.message", (roomId, event) => {
         let sender = event["sender"];
         var eventId = event["event_id"];
         console.log(eventId)
-        if (sender === `@${config["mainUserNameNoAt"]}:${config["mainMatrixUserDomain"]}`) {
+        if (sender === "@user:example.org") {
             let args = body.split("|")
 
             if (body.startsWith("!dm")) {
@@ -33,7 +33,7 @@ clientm.on("room.message", (roomId, event) => {
             } else if (body == "!redactMe") {
                 console.log("please?")
             } else if (body == "!list") {
-                let list = clientd.guilds.cache.get(config["discordServerId"])
+                let list = clientd.guilds.cache.get("discordServerIdHere")
                 list.members.cache.each(member => {
                     clientm.sendNotice(currentRoomId, `${String(member.displayName)} is id ${String(member.id)}`);
                 }); 
@@ -58,4 +58,4 @@ clientd.on('message', message => {
     }
 });
 
-clientm.start().then(() => clientd.login(config["discordBotKey"]));
+clientm.start().then(() => clientd.login('discord key here'));
