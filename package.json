@@ -1,0 +1,24 @@
+{
+  "name": "discord-dm-bridge",
+  "version": "1.0.0",
+  "description": "for me",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sam Lord",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "matrix-bot-sdk": "^0.5.18"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://sparksammy.com/discord-dm-bridge"
+  },
+  "keywords": [
+    "discord",
+    "matrix"
+  ]
+}
